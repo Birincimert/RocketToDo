@@ -7,30 +7,42 @@ const firstCardBody = document.querySelectorAll(".card-body")[0];
 const secondCardBody = document.querySelectorAll(".card-body")[1];
 const clearButton = document.querySelector("#clearButton");
 const filterInput = document.querySelector("#todoSearch");
+const buttonCheck = document.querySelector(".checkButton");
 
 let todos = [];
 
+
 runEvents();
+
 
 function runEvents() {
     form.addEventListener("submit", addTodo);
     //sayfa yenilendiğinde metot çalıştırıp, oradan storage'taki todo'ları aldık
     document.addEventListener("DOMContentLoaded", pageLoaded);
     secondCardBody.addEventListener("click", removeTodo);
-    clearButton.addEventListener("click", ClearAllTodos);
+    clearButton.addEventListener("click", clearAllTodos);
     filterInput.addEventListener("keyup", filter);
+    document.addEventListener("change", checkedTodo)
 }
 
 function addTodo(e) {
     const inputText = addInput.value.trim();
+
     if (inputText == null || inputText == "") {
         showAlert("warning", "Lütfen boş bırakmayınız.");
     } else {
+
+        const newTodo = {
+            id: Date.now(), // benzersiz ID
+            text: inputText,
+            completed: false
+        };
+
         //Arayüze todo eklemek için
-        addTodoToUI(inputText);
+        addTodoToUI(newTodo);
 
         //Storage'a todo eklemek için (sayfa yenilenince kaybolmasınlar diye)
-        addTodoToStorage(inputText);
+        addTodoToStorage(newTodo);
 
         filterInput.disabled = false;
 
@@ -44,29 +56,30 @@ function addTodo(e) {
 
 
 function addTodoToUI(newTodo) {
-    /* 
-        <li class="list-group-item d-flex justify-content-between">Todo 1
-            <a href="#" class="delete-item">
-                <i class="fa fa-remove"></i>
-            </a>
-         </li> 
-    */
 
-    const li = document.createElement("li");
-    li.className = "list-group-item d-flex justify-content-between";
-    li.textContent = newTodo;
+    const addingTodo = `<li class="input-group mb-3" data-id="${newTodo.id}">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input class="checkButton" type="checkbox" ${newTodo.completed ? 'checked' : ""}>
+                </div>
+            </div>
+            <input type="text" class="listedtodo form-control" value="${newTodo.text}" disabled>
+            <div class="input-group-text">
+                <a href="#" class="delete-item">
+                    <i class="fa fa-remove"></i>
+                </a>
+            </div>
+        </li>`;
 
-    const a = document.createElement("a");
-    a.href = "#";
-    a.className = "delete-item";
+    todoList.insertAdjacentHTML('beforeend', addingTodo);
 
-    const i = document.createElement("i");
-    i.className = "fa fa-remove";
-
-    //hiyerarşik olarak ekliyoruz
-    a.appendChild(i);
-    li.appendChild(a);
-    todoList.appendChild(li);
+    //checked işaretliyse:
+    const li = todoList.lastElementChild;
+    const input = li.querySelector(".listedtodo");
+    if (newTodo.completed) {
+        li.classList.add("completed-bg");
+        input.classList.add("done");
+    }
 
     //bir todo girildikten sonra inputu sıfırlamak için
     addInput.value = "";
@@ -101,8 +114,7 @@ function showAlert(type, message) {
     //     </div>
 
     const div = document.createElement("div");
-    //div.className = "alert alert-" + type;
-    div.className = `alert alert-${type}`; //literal template ile class verdik
+    div.className = `alert alert-${type}`; //literal template ile class verdik yoksa : div.className = "alert alert-" + type; böyle de verebilirdik
     div.textContent = message;
 
     //first card-body'in sonuna attık
@@ -129,13 +141,10 @@ function removeTodo(e) {
     //basılan yerin çarpı olduğunu almak için
     if (e.target.className === "fa fa-remove") {
 
-        //i'nin parent'ı a idi onun da parent'ı li idi biz de todo yu silmek için 
-        //list item'dan kaldırırız
-        const todo = e.target.parentElement.parentElement;
-        todo.remove(); //ekrandan silindi
-
-        //Storage'dan silme
-        removeTodoFromStorage(todo.textContent);
+        const li = e.target.closest("li");
+        const id = Number(li.dataset.id);
+        li.remove();
+        removeTodoFromStorage(id);
 
         showAlert("primary", "Todo başarıyla silindi.");
 
@@ -145,20 +154,18 @@ function removeTodo(e) {
     }
 }
 
-function removeTodoFromStorage(removeTodo) {
+function removeTodoFromStorage(id) {
     checkTodosFromStorage(); //önce güncel değerleri aldık
-    todos.forEach(function (todo, index) {
-        if (removeTodo === todo) { //foreach ile dönüp verilen index'teki
-            todos.splice(index, 1); //' todo'yu silmiş olduk.
-        }
-    });
+
+    todos = todos.filter(todo => todo.id !== id);
+
     //güncel halini tekrar set edelim
     localStorage.setItem("todos", JSON.stringify(todos));
 }
 
-function ClearAllTodos() {
+function clearAllTodos() {
     //tüm li'leri yani todoları almak için
-    const todolistesi = document.querySelectorAll(".list-group-item");
+    const todolistesi = document.querySelectorAll(".input-group");
 
     if (todolistesi.length > 0) {
         todolistesi.forEach(function (todo) {
@@ -184,15 +191,16 @@ function ClearAllTodos() {
 
 function filter(e) {
     const filterValue = e.target.value.toLowerCase().trim();
-    const todolistesi = document.querySelectorAll(".list-group-item");
-    console.log(todolistesi);
+    const todolistesi = document.querySelectorAll(".input-group");
 
     if (todolistesi.length > 0) {
-        todolistesi.forEach(function (todo) {
-            if (todo.textContent.toLowerCase().trim().includes(filterValue)) {
-                todo.setAttribute("style", "display: block");
+        todolistesi.forEach(function (li) {
+            const input = li.querySelector(".listedtodo");
+            const todoText = input.value.toLowerCase();
+            if (todoText.toLowerCase().trim().includes(filterValue)) {
+                li.style.display = "flex";
             } else {
-                todo.setAttribute("style", "display: none !important");
+                li.style.display = "none";
             }
         });
     }
@@ -201,4 +209,27 @@ function filter(e) {
 function disableInput() {
     filterInput.value = "";
     filterInput.disabled = true;
+}
+
+function checkedTodo(e) {
+    if (e.target.classList.contains("checkButton")) {
+
+        const li = e.target.closest("li");
+        const input = li.querySelector(".listedtodo");
+        const id = Number(li.dataset.id);
+
+
+        input.classList.toggle("done", e.target.checked);
+        li.classList.toggle("completed-bg", e.target.checked);
+
+        //storage'da güncellemek için
+        const index = todos.findIndex(todo => todo.id === id);
+        if (index > -1) {
+            todos[index].completed = e.target.checked;
+            localStorage.setItem("todos", JSON.stringify(todos));
+        }
+
+
+    }
+
 }

@@ -1,4 +1,3 @@
-<!-- todo: görevler yapılınca soluna üzeri çizilme butonu eklensin. -->
 <!-- todo: altta bir div içerisine günlük,haftalık,aylık görevler yerleştirilebilir, görev eklerken de hangi bölüme atanacağı seçilir.  -->
 <!-- todo: görevlere öncelik yapılandırılmaları eklenebilir high, low, medium priority şeklinde kırmızı yeşil ve sarı renklerle -->
 <!-- todo: günlük, haftalık tablolardaki görevlerin ne kadarının yapıldığına göre yüzdelik bir başarı progress barı konulabilir -->
@@ -14,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
 
     <title>ToDo App</title>
 </head>
@@ -54,15 +54,30 @@
 
                     <ul class="list-group">
 
-                        <!-- BU EKLEME İŞLEMİ JS'de addTodo ile yapılacak -->
+                        <!-- BU BASIC EKLEME İŞLEMİ JS'de addTodo ile yapılacak -->
 
-                        <!-- 
-                            <li class="list-group-item d-flex justify-content-between">Todo 1
+                        <!-- <li class="list-group-item d-flex justify-content-between">Todo 1
+                            <a href="#" class="delete-item">
+                                <i class="fa fa-remove"></i>
+                            </a>
+                        </li> -->
+
+
+
+                        <!-- BU DA GELİSMİS  -->
+                        <!-- <li class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input class="checkButton" type="checkbox">
+                                </div>
+                            </div>
+                            <input type="text" class="listedtodo form-control" value="" disabled>
+                            <div class="input-group-text">
                                 <a href="#" class="delete-item">
                                     <i class="fa fa-remove"></i>
                                 </a>
-                            </li> 
-                            -->
+                            </div>
+                        </li> -->
 
                     </ul>
 

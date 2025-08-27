@@ -1,0 +1,14 @@
+.done {
+    text-decoration: line-through;
+}
+
+.completed-bg * {
+    background-color: #343a40;
+    color: white;
+}
+
+.completed-bg .form-control {
+    background-color: #343a40;
+    color: white;
+    /* border-color: #343a40; */
+}
