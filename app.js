@@ -8,6 +8,9 @@ const secondCardBody = document.querySelectorAll(".card-body")[1];
 const clearButton = document.querySelector("#clearButton");
 const filterInput = document.querySelector("#todoSearch");
 const buttonCheck = document.querySelector(".checkButton");
+const prioritySelect = document.querySelector("#todoPriority");
+const container = document.querySelector(".container");
+
 
 let todos = [];
 
@@ -27,6 +30,7 @@ function runEvents() {
 
 function addTodo(e) {
     const inputText = addInput.value.trim();
+    const prioritySelect = document.querySelector("#todoPriority");
 
     if (inputText == null || inputText == "") {
         showAlert("warning", "Lütfen boş bırakmayınız.");
@@ -35,7 +39,8 @@ function addTodo(e) {
         const newTodo = {
             id: Date.now(), // benzersiz ID
             text: inputText,
-            completed: false
+            completed: false,
+            priority: prioritySelect.value || "Low"
         };
 
         //Arayüze todo eklemek için
@@ -45,6 +50,7 @@ function addTodo(e) {
         addTodoToStorage(newTodo);
 
         filterInput.disabled = false;
+        if (prioritySelect) prioritySelect.value = "Low";
 
         //Başarılı olursa uyarı verelim
         showAlert("success", "Todo eklendi!");
@@ -57,13 +63,35 @@ function addTodo(e) {
 
 function addTodoToUI(newTodo) {
 
+    const priorityMap = {
+        Low: {
+            text: "Low Priority",
+            color: "primary"
+        },
+        Medium: {
+            text: "Medium Priority",
+            color: "warning"
+        },
+        High: {
+            text: "High Priority",
+            color: "danger"
+        }
+    };
+
+    const pr = priorityMap[newTodo.priority] || priorityMap["Low"];
+
     const addingTodo = `<li class="input-group mb-3" data-id="${newTodo.id}">
             <div class="input-group-prepend">
                 <div class="input-group-text">
                     <input class="checkButton" type="checkbox" ${newTodo.completed ? 'checked' : ""}>
                 </div>
             </div>
+
             <input type="text" class="listedtodo form-control" value="${newTodo.text}" disabled>
+            <span style="width: 15%" class="badge badge-${pr.color} d-flex align-items-center justify-content-center mr-4">
+          ${pr.text}
+        </span>
+        
             <div class="input-group-text">
                 <a href="#" class="delete-item">
                     <i class="fa fa-remove"></i>
@@ -109,21 +137,18 @@ function checkTodosFromStorage() {
 //Dinamik olarak başarılı veya uyarı mesajını oluşturmak için
 function showAlert(type, message) {
 
-    //     <div class="alert alert-success" role="alert">
-    //     This is a success alert—check it out!
-    //     </div>
+    const alert = `
+        <div class="alert alert-${type} mt-3" role="alert">
+        ${message}
+        </div> `
 
-    const div = document.createElement("div");
-    div.className = `alert alert-${type}`; //literal template ile class verdik yoksa : div.className = "alert alert-" + type; böyle de verebilirdik
-    div.textContent = message;
+    container.insertAdjacentHTML('beforeend', alert);
 
-    //first card-body'in sonuna attık
-    firstCardBody.appendChild(div);
-
+    const alertElem = container.lastElementChild;
     //1.5 saniye sonra uyarı kaybolsun diye
     setTimeout(function () {
-        div.remove();
-    }, 1500);
+        alertElem.remove();
+    }, 1300);
 }
 
 function pageLoaded() {
@@ -195,8 +220,10 @@ function filter(e) {
 
     if (todolistesi.length > 0) {
         todolistesi.forEach(function (li) {
+
             const input = li.querySelector(".listedtodo");
             const todoText = input.value.toLowerCase();
+
             if (todoText.toLowerCase().trim().includes(filterValue)) {
                 li.style.display = "flex";
             } else {
@@ -220,7 +247,18 @@ function checkedTodo(e) {
 
 
         input.classList.toggle("done", e.target.checked);
-        li.classList.toggle("completed-bg", e.target.checked);
+        input.classList.toggle("checked-animation", e.target.checked);
+        //li.classList.toggle("completed-bg", e.target.checked);
+
+        // Arka plan animasyonu
+        // if (e.target.checked) {
+        //     li.classList.add("completed-bg");
+        //     setTimeout(() => {
+        //         li.classList.add("checked-animation");
+        //     }, 10); // CSS transition için minik gecikme
+        // } else {
+        //     li.classList.remove("completed-bg", "checked-animation");
+        // }
 
         //storage'da güncellemek için
         const index = todos.findIndex(todo => todo.id === id);
@@ -232,4 +270,19 @@ function checkedTodo(e) {
 
     }
 
+}
+
+const starryBg = document.querySelector('.starry-bg');
+const numStars = 1000; // yıldız sayısı
+
+for (let i = 0; i < numStars; i++) {
+    const star = document.createElement('div');
+    star.classList.add('star');
+    const size = Math.random() * 3 + 1; // 1px - 4px
+    star.style.width = `${size}px`;
+    star.style.height = `${size}px`;
+    star.style.top = `${Math.random() * 100}%`;
+    star.style.left = `${Math.random() * 100}%`;
+    star.style.animationDuration = `${Math.random() * 2 + 1}s`;
+    starryBg.appendChild(star);
 }
