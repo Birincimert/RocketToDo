@@ -1,0 +1,93 @@
+<!-- todo: görevler yapılınca soluna üzeri çizilme butonu eklensin. -->
+<!-- todo: altta bir div içerisine günlük,haftalık,aylık görevler yerleştirilebilir, görev eklerken de hangi bölüme atanacağı seçilir.  -->
+<!-- todo: görevlere öncelik yapılandırılmaları eklenebilir high, low, medium priority şeklinde kırmızı yeşil ve sarı renklerle -->
+<!-- todo: günlük, haftalık tablolardaki görevlerin ne kadarının yapıldığına göre yüzdelik bir başarı progress barı konulabilir -->
+<!-- todo: datetime ile görevler storage'da due date'lerine göre sıralanabilir ve günü yaklaşan görevler yeşilden kırmızıya doğru geçebilir yeşil en az 5 gün sarı 3 gün kırmızı 1 gün şeklinde -->
+<!-- todo: bootstrap ile solid bir yapı ve css ile sağlam bir tasarım yapılmalı ayrıca iconlarla süslenmeli -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <title>ToDo App</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="card w-100 mt-3">
+                <div class="card-header">
+                    <h5 class="card-title">Todo List</h5>
+                </div>
+                <div class="card-body">
+                    <form id="todoAddForm" class="mt-2">
+                        <label for="todoName">Todo listenizi oluşturmaya başlayın!</label>
+                        <input type="text" class="form-control mt-2" id="todoName" aria-describedby="todo"
+                            placeholder="Örnek: Alışverişe gitmek..">
+
+                        <small id="todoName" class="form-text text-muted">Başarı, başlamak için mükemmel bir zaman
+                            beklemek yerine şimdi harekete geçmektir.</small>
+
+                        <button id="todoAddButton" type="submit" class="btn btn-primary mt-4 btn-sm">Todo Ekle
+                        </button>
+                    </form>
+
+                    <hr>
+                    </hr>
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-title">Todo Listesi</h5>
+                    <form name="form2" id="todoListForm">
+
+                        <input id="todoSearch" type="text" class="form-control mt-3" placeholder="Todo ara">
+
+                        <hr class="mt-4">
+
+                    </form>
+
+                    <ul class="list-group">
+
+                        <!-- BU EKLEME İŞLEMİ JS'de addTodo ile yapılacak -->
+
+                        <!-- 
+                            <li class="list-group-item d-flex justify-content-between">Todo 1
+                                <a href="#" class="delete-item">
+                                    <i class="fa fa-remove"></i>
+                                </a>
+                            </li> 
+                            -->
+
+                    </ul>
+
+                    <a href="#" id="clearButton" class="btn btn-primary btn-sm mt-3">Tüm Todoları Temizle</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
