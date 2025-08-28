@@ -1,5 +1,4 @@
 <!-- todo: altta bir div içerisine günlük,haftalık,aylık görevler yerleştirilebilir, görev eklerken de hangi bölüme atanacağı seçilir.  -->
-<!-- todo: görevlere öncelik yapılandırılmaları eklenebilir high, low, medium priority şeklinde kırmızı yeşil ve sarı renklerle -->
 <!-- todo: günlük, haftalık tablolardaki görevlerin ne kadarının yapıldığına göre yüzdelik bir başarı progress barı konulabilir -->
 <!-- todo: datetime ile görevler storage'da due date'lerine göre sıralanabilir ve günü yaklaşan görevler yeşilden kırmızıya doğru geçebilir yeşil en az 5 gün sarı 3 gün kırmızı 1 gün şeklinde -->
 <!-- todo: bootstrap ile solid bir yapı ve css ile sağlam bir tasarım yapılmalı ayrıca iconlarla süslenmeli -->
@@ -34,7 +33,7 @@
         <div class="row">
             <div class="card w-100 mt-3">
                 <div class="card-header">
-                    <h5 class="card-title">Todo List</h5>
+                    <h5 class="card-title mt-3"> <i class="fa-solid fa-meteor"></i> Todo List</h5>
                 </div>
                 <div class="card-body">
                     <form id="todoAddForm" class="mt-2">
@@ -46,7 +45,7 @@
                             beklemek yerine şimdi harekete geçmektir.</small>
 
                         <label for="todoPrioritys" class="secondLabel mt-2 pt-1">Öncelik sırası:</label>
-                        <select id="todoPriority" class="form-control w-25">
+                        <select id="todoPriority" class="form-control col-sm-4 col-md-3 col-lg-2">
                             <option value="Low" selected>Low</option>
                             <option value="Medium">Medium</option>
                             <option value="High">High</option>
@@ -62,7 +61,7 @@
                 </div>
 
                 <div class="card-body">
-                    <h5 class="card-title">Todo Listesi</h5>
+                    <h5 class="card-title"><i class="fa-solid fa-list-check"></i> Todo Listesi </h5>
                     <form name="form2" id="todoListForm">
 
                         <input id="todoSearch" type="text" class="form-control mt-3" placeholder="Todo ara">
@@ -77,7 +76,8 @@
 
                     </ul>
 
-                    <a href="#" id="clearButton" class="btn btn-primary btn-sm mt-3">Tüm Todoları Temizle</a>
+                    <a href="#" id="clearButton" class="btn btn-primary btn-sm mt-3">Tüm Todoları Temizle <i
+                            class="fa-solid fa-trash-can"></i></a>
                 </div>
             </div>
         </div>

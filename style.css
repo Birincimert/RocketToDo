@@ -1,4 +1,4 @@
-/* Genel arka plan */
+/* ---------- Genel ---------- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: radial-gradient(ellipse at bottom, #0b0c1a 0%, #000010 100%);
@@ -6,13 +6,12 @@ body {
     min-height: 100vh;
     padding-top: 20px;
     background-image: url('img/rocket_space.jpeg');
-    /* yıldızlar */
     background-size: cover;
     background-position: 20% 75%;
     background-attachment: fixed;
 }
 
-/* Kart stili */
+/* ---------- Kart ---------- */
 .card {
     background-color: rgba(10, 10, 25, 0.85);
     border-radius: 15px;
@@ -20,13 +19,12 @@ body {
     box-shadow: 0 0 20px #0ff;
 }
 
-/* Card header */
 .card-header h5 {
     color: #0ff;
     text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
 }
 
-/* Form input */
+/* ---------- Form input ---------- */
 #todoName,
 #todoSearch,
 select,
@@ -37,39 +35,71 @@ select,
     box-shadow: 0 0 5px #0ff inset;
 }
 
-/* Todo input alanı */
+/* ---------- Todo list item ---------- */
+.input-group {
+    display: flex;
+    align-items: stretch;
+    position: relative;
+    gap: 0.5rem;
+}
+
+/* Checkbox ve delete buton kapsayıcıları */
+.input-group .input-group-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    min-height: 100%;
+    /* textarea yüksekliği kadar */
+    border-radius: 5px;
+    background-color: rgba(10, 10, 25, 0.9);
+    border: 1px solid #0ff;
+    box-shadow: 0 0 10px #0ff;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Textarea */
 .input-group .listedtodo {
     position: relative;
-    background: linear-gradient(to right, #39ff14 0%, #39ff14 100%);
-    background-size: 0% 100%;
-    background-repeat: no-repeat;
-    transition: background-size 1.2s ease, color 0.3s ease;
-    color: #fff;
+    flex-grow: 1;
+    padding: 1.8rem 0.5rem 0.5rem 0.5rem;
+    /* üst padding badge için */
+    resize: none;
+    overflow: hidden;
     font-weight: bold;
     border-radius: 5px;
     border: 1px solid #0ff;
+    color: #fff;
+    background-color: rgba(20, 20, 40, 0.8);
+    background-image: linear-gradient(to right, #1f7c0f 100%, transparent 0%);
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    box-shadow: 0 0 10px #0ff inset, 0 0 5px #0ff;
+    transition: background-size 1.4s ease, color 0.3s ease;
 }
 
-/* Checked animasyonu (soldan sağa ışık geçişi) */
-.input-group .listedtodo.checked-animation {
-    background-size: 100% 100%;
-    color: #0ff;
+/* Checked animasyonu: soldan sağa yeşil bar */
+.listedtodo.checked-animation {
+    color: #000;
     text-decoration: line-through;
+    background-size: 100% 100%;
     box-shadow: 0 0 15px #0ff, 0 0 30px #0ff inset;
 }
 
-/* Badge stili */
+/* ---------- Badge ---------- */
+/* Badge textarea içinde sağ üstte */
 .input-group .badge {
     position: absolute;
-    right: 50px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 2;
-    padding: 0.35em 0.7em;
-    border-radius: 12px;
-    font-weight: 700;
+    top: 0.5em;
+    left: 5em;
+    font-size: 0.75rem;
+    padding: 0.2em 0.5em;
+    font-weight: bold;
     text-shadow: 0 0 3px #000;
-    box-shadow: 0 0 8px #0ff, 0 0 15px #0ff inset;
+    box-shadow: 0 0 5px #0ff inset;
+    pointer-events: none;
+    border-radius: 5px;
+    z-index: 2;
 }
 
 /* Priority renkleri */
@@ -85,28 +115,10 @@ select,
 
 .badge-danger {
     background-color: #ff073a !important;
-    color: #fff;
+    color: #000;
 }
 
-/* Checkbox ve silme butonları */
-.input-group .input-group-text {
-    background-color: rgba(10, 10, 25, 0.9);
-    border: 1px solid #0ff;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 0.5rem;
-    box-shadow: 0 0 10px #0ff;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-/* Checkbox hover efekti */
-.input-group .checkButton:hover {
-    transform: scale(1.2);
-}
-
-/* Silme ikonu hover efekti */
+/* Delete ikonu hover efekti */
 .input-group .delete-item i {
     color: #ff073a;
     cursor: pointer;
@@ -118,7 +130,12 @@ select,
     text-shadow: 0 0 10px #ff073a;
 }
 
-/* Butonlar */
+/* Checkbox hover efekti */
+.input-group .checkButton:hover {
+    transform: scale(1.2);
+}
+
+/* ---------- Buton ---------- */
 .btn-primary {
     background-color: #0ff;
     border: none;
@@ -135,22 +152,6 @@ select,
     box-shadow: 0 0 20px #0ff, 0 0 40px #1A212C inset;
 }
 
-/* Alert */
-.alert {
-    border-radius: 8px;
-    box-shadow: 0 0 10px #0ff;
-    text-align: center;
-}
-
-/* Responsive */
-@media (max-width: 576px) {
-    .input-group .badge {
-        right: 5px;
-        font-size: 0.7rem;
-        padding: 0.2em 0.5em;
-    }
-}
-
 /* Neon/uzay temalı alertler */
 .alert {
     font-weight: bold;
@@ -164,10 +165,8 @@ select,
     transform: translateY(0);
 }
 
-/* Neon renkler */
 .alert-success {
     background-color: #0ff;
-    /* Neon cyan */
     border-color: #0ff;
     color: #000;
     text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
@@ -175,7 +174,6 @@ select,
 
 .alert-warning {
     background-color: #ff0;
-    /* Neon yellow */
     border-color: #ff0;
     color: #000;
     text-shadow: 0 0 5px #ff0, 0 0 10px #ff0;
@@ -183,7 +181,6 @@ select,
 
 .alert-danger {
     background-color: #f0f;
-    /* Neon magenta */
     border-color: #f0f;
     color: #000;
     text-shadow: 0 0 5px #f0f, 0 0 10px #f0f;
@@ -191,13 +188,11 @@ select,
 
 .alert-primary {
     background-color: #0f0;
-    /* Neon green */
     border-color: #0f0;
     color: #000;
     text-shadow: 0 0 5px #0f0, 0 0 10px #0f0;
 }
 
-/* Kayan solma animasyonu */
 .alert.fade-out {
     opacity: 0;
     transform: translateY(-20px);
@@ -205,16 +200,14 @@ select,
 
 .mainLabel,
 .secondLabel {
-    font-weight: bold;
-
-    border-color: #0ff;
-    color: #000000;
+    font-weight: 300;
+    border-color: rgb(2, 29, 29);
+    color: #ffffff;
     text-shadow: 0 0 1em #0ff, 0 0 10px #0ff;
 }
 
 .card-title {
     font-weight: bold;
-
     border-color: #0ff;
     color: #fff;
     text-shadow: 0 0 1em #0ff, 0 0 10px #0ff;
@@ -222,7 +215,7 @@ select,
 
 /* Logo kapsayıcı */
 .mainLogo {
-    position: fixed;
+    position: absolute;
     top: 10px;
     left: 10px;
     z-index: 100;
@@ -231,52 +224,21 @@ select,
     cursor: pointer;
 }
 
-/* Rocket ikonu */
 .mainLogo i {
     color: #0ff;
-    /* neon cyan */
-    text-shadow:
-        0 0 5px #0ff,
-        0 0 10px #0ff,
-        0 0 20px #0ff,
-        0 0 40px #0ff;
-    animation: rocket-glow 1.5s infinite alternate;
+    text-shadow: 0 0 5px #0ff, 0 0 20px #0ff;
     animation: rocketLift 2s ease-in-out infinite alternate;
 }
 
-/* Logo yazısı */
 .mainLogo h3 {
     font-family: 'Orbitron', sans-serif;
-    /* uzay temalı font */
     color: #fff;
-    text-shadow:
-        0 0 5px #0ff,
-        0 0 10px #0ff,
-        0 0 20px #0ff;
+    text-shadow: 0 0 10px #0ff;
     font-weight: bold;
     letter-spacing: 1px;
     animation: text-glow 1.5s infinite alternate;
 }
 
-/* Rocket ikon glow animasyonu */
-@keyframes rocket-glow {
-    0% {
-        color: #0ff;
-        text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
-    }
-
-    50% {
-        color: #0ff;
-        text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
-    }
-
-    100% {
-        color: #0ff;
-        text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
-    }
-}
-
-/* Rocket Up-Down Animation */
 @keyframes rocketLift {
     0% {
         transform: translateY(0) rotate(-5deg);
@@ -291,7 +253,6 @@ select,
     }
 }
 
-/* Text glow animasyonu */
 @keyframes text-glow {
     0% {
         text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
@@ -306,8 +267,6 @@ select,
     }
 }
 
-/* */
-
 /* Animasyonlu yıldız arka planı */
 .starry-bg {
     position: fixed;
@@ -316,22 +275,18 @@ select,
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 1;
-    /* 1 veya body içindeki tüm içerikten yüksek bir değer */
+    z-index: -1;
     background: transparent;
 }
 
-
-/* Her bir yıldız için ortak stil */
 .starry-bg .star {
     position: absolute;
     background: white;
     border-radius: 50%;
     opacity: 0.8;
-    animation: twinkle 2s infinite alternate;
+    animation: twinkle 1.75s infinite alternate;
 }
 
-/* Yıldız yanıp sönme animasyonu */
 @keyframes twinkle {
     0% {
         opacity: 0.2;
@@ -346,42 +301,65 @@ select,
     }
 }
 
-/* Daha dinamik hareket için yıldızları keyframe ile sola hareket ettirebiliriz */
-@keyframes moveStar {
-    0% {
-        transform: translateX(0) translateY(0);
+/* ---------- Mobil ---------- */
+@media (max-width: 576px) {
+    .input-group .badge {
+        position: absolute;
+        top: 0.5em;
+        /* Üstten biraz boşluk */
+        right: 0.5em;
+        /* Sağdan boşluk, checkbox’a çarpmaz */
+        width: auto;
+        height: auto;
+        min-width: 20px;
+        padding: 0.2em 0.5em;
+        font-size: 0.7rem;
+        border-radius: 5px;
     }
 
-    100% {
-        transform: translateX(-100vw) translateY(-50vh);
-    }
-}
-
-.rocket-container {
-    position: relative;
-    width: 50px;
-    /* roketin yörünge alanı genişliği */
-    height: 50px;
-    /* roketin yörünge alanı yüksekliği */
-}
-
-.rocket-container i {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: rocketOrbit 4s linear infinite;
-}
-
-/* Daire şeklinde yörünge */
-@keyframes rocketOrbit {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg) translateX(30px) rotate(0deg);
+    .badge-low {
+        background-color: #39ff14 !important;
     }
 
-    100% {
-        transform: translate(-50%, -50%) rotate(360deg) translateX(30px) rotate(-360deg);
+    .badge-medium {
+        background-color: #ffd700 !important;
+    }
+
+    .badge-high {
+        background-color: #ff073a !important;
+    }
+
+    .mainLogo {
+        position: absolute !important;
+        top: 0 !important;
+        left: 40% !important;
+        transform: translateX(-50%);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 0;
+        margin: 0;
+        background: none;
+        width: 100%;
+    }
+
+    .mainLogo h3 {
+        font-size: 1.8rem;
+        margin: 0;
+        color: #fff;
+        text-shadow: 0 0 10px #0ff;
+        font-weight: bold;
+    }
+
+    .mainLogo i {
+        font-size: 1.8rem;
+        color: #0ff;
+        margin-right: 0.5rem;
+        animation: rocketLift 2s ease-in-out infinite alternate;
+    }
+
+    body {
+        padding-top: 50px;
     }
 }
-
-/* */

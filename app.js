@@ -26,11 +26,11 @@ function runEvents() {
     clearButton.addEventListener("click", clearAllTodos);
     filterInput.addEventListener("keyup", filter);
     document.addEventListener("change", checkedTodo)
+    document.addEventListener("click", editAndSave)
 }
 
 function addTodo(e) {
     const inputText = addInput.value.trim();
-    const prioritySelect = document.querySelector("#todoPriority");
 
     if (inputText == null || inputText == "") {
         showAlert("warning", "Lütfen boş bırakmayınız.");
@@ -81,33 +81,47 @@ function addTodoToUI(newTodo) {
     const pr = priorityMap[newTodo.priority] || priorityMap["Low"];
 
     const addingTodo = `<li class="input-group mb-3" data-id="${newTodo.id}">
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <input class="checkButton" type="checkbox" ${newTodo.completed ? 'checked' : ""}>
-                </div>
-            </div>
-
-            <input type="text" class="listedtodo form-control" value="${newTodo.text}" disabled>
-            <span style="width: 15%" class="badge badge-${pr.color} d-flex align-items-center justify-content-center mr-4">
-          ${pr.text}
-        </span>
-        
+        <!-- Solda checkbox -->
+        <div class="input-group-prepend">
             <div class="input-group-text">
+                <input class="checkButton" type="checkbox" ${newTodo.completed ? 'checked' : ""}>
+            </div>
+        </div>
+
+        <!-- Ortada todo metni -->
+        <textarea class="listedtodo form-control" rows="1" disabled>${newTodo.text}</textarea>
+
+        <!-- Sağda işlemler: düzenle ve sil -->
+        <div class="input-group-append d-flex gap-1">
+            <div class="input-group-text edit-div">
+                <a href="#" class="edit-item">
+                    <i class="fa fa-edit"></i>
+                </a>
+            </div>
+            <div class="input-group-text delete-div">
                 <a href="#" class="delete-item">
                     <i class="fa fa-remove"></i>
                 </a>
             </div>
-        </li>`;
+        </div>
 
-    todoList.insertAdjacentHTML('beforeend', addingTodo);
+        <!-- Priority badge -->
+        <span style="width: 7.5rem" class="badge badge-${pr.color} d-flex align-items-center justify-content-center mr-4">
+            ${pr.text}
+        </span>
+    </li>`;
 
-    //checked işaretliyse:
-    const li = todoList.lastElementChild;
-    const input = li.querySelector(".listedtodo");
+    todoList.insertAdjacentHTML('afterbegin', addingTodo);
+
+    // checked işaretliyse:
+    const li = todoList.firstElementChild;
+    const textarea = li.querySelector(".listedtodo");
     if (newTodo.completed) {
         li.classList.add("completed-bg");
-        input.classList.add("done");
+        textarea.classList.add("done");
     }
+
+    autoResize(textarea);
 
     //bir todo girildikten sonra inputu sıfırlamak için
     addInput.value = "";
@@ -272,6 +286,56 @@ function checkedTodo(e) {
 
 }
 
+
+// textarea yüksekliği içerik kadar büyüsün
+function autoResize(textarea) {
+    if (!textarea) return;
+    textarea.style.height = 'auto'; // önce sıfırla
+    textarea.style.height = textarea.scrollHeight + 'px'; // scrollHeight kadar yükseklik ver
+}
+
+function editAndSave(e) {
+    // Düzenleme ikonu veya kaydet ikonu
+    if (e.target.closest(".edit-item")) {
+        e.preventDefault();
+
+        const li = e.target.closest("li");
+        const textarea = li.querySelector(".listedtodo");
+        const icon = li.querySelector(".edit-item i");
+
+        if (textarea.disabled) {
+            // Düzenleme başlat
+            textarea.disabled = false;
+            textarea.focus();
+            icon.classList.remove("fa-edit");
+            icon.classList.add("fa-save");
+        } else {
+            // Kaydet
+            textarea.disabled = true;
+            autoResize(textarea); // textarea yüksekliğini yeniden ayarla
+            icon.classList.remove("fa-save");
+            icon.classList.add("fa-edit");
+
+            // Storage'ı güncelle
+            const id = Number(li.dataset.id);
+            const index = todos.findIndex(todo => todo.id === id);
+            if (index > -1) {
+                todos[index].text = textarea.value;
+                localStorage.setItem("todos", JSON.stringify(todos));
+            }
+
+            showAlert("success", "Todo başarıyla güncellendi!");
+        }
+    }
+}
+
+
+
+
+
+
+
+
 const starryBg = document.querySelector('.starry-bg');
 const numStars = 1000; // yıldız sayısı
 
@@ -286,3 +350,5 @@ for (let i = 0; i < numStars; i++) {
     star.style.animationDuration = `${Math.random() * 2 + 1}s`;
     starryBg.appendChild(star);
 }
+
+/* Badge resizes */
