@@ -1,4 +1,4 @@
-# 🌌 Neon Todo List
+# 🌌 Rocket Todo List
 
 **Neon ve uzay temalı Todo List uygulaması. Modern, parlak ve kullanışlı!**
 
