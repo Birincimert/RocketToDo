@@ -21,9 +21,9 @@
 ## 🚀 Kullanım
 
 
-**https://birincimert.github.io/RocketToDo**
+Link => **https://birincimert.github.io/RocketToDo**
 
-* Henüz ilk aşamada olan uygulamamı sevdiyseniz yıldız bırakabilirsiniz. ✨
+Henüz ilk aşamada olan uygulamamı sevdiyseniz yıldız bırakabilirsiniz. ✨
 
 ---
 
