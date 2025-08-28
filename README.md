@@ -20,17 +20,10 @@
 
 ## 🚀 Kullanım
 
-1. Repo’yu klonlayın:
 
-```
-git clone https://github.com/kullaniciadi/neon-todo-list.git
-```
+**https://birincimert.github.io/RocketToDo**
 
-2. `index.html` dosyasını tarayıcınızda açın
-3. Todo ekleyin, silin veya düzenleyin
-4. Filtreleme kutusunu kullanarak todo’ları arayın
-
-* Henüz ilk aşamada olan uygulamamı sevdiyseniz yıldız bırakabilirsiniz.
+* Henüz ilk aşamada olan uygulamamı sevdiyseniz yıldız bırakabilirsiniz. ✨
 
 ---
 
